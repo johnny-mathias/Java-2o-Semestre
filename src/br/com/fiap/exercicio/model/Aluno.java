@@ -18,6 +18,11 @@ public class Aluno {
         this.nota2 = nota2;
     }
 
+    @Override
+    public String toString() {
+        return "RM: " + rm + "\nNOME: " + nome + "\nIDADE: " + idade + "\nNOTA 1: " + nota1 + "\nNOTA 2:" + nota2;
+    }
+
     public int getRm() {
         return rm;
     }
