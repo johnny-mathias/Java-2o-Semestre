@@ -1,4 +1,4 @@
-package br.com.fiap.exemplo01;
+package br.com.fiap.exemplo;
 
 import java.util.ArrayList;
 import java.util.List;
