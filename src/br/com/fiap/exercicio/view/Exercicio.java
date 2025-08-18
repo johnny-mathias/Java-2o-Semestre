@@ -11,14 +11,20 @@ public class Exercicio {
         //Criar um mapa de aluno
         Map<Integer, Aluno> alunoMap = new HashMap<Integer, Aluno>();
 
+        //Recuperar todos os alunos (valores no mapa)
+        Collection<Aluno> alunos = alunoMap.values();
+
         //Ler os dados dos alunos
         int opcao = -1;
         String menu = """
                 ===========MENU===========
                 
                 1- Adicionar Aluno
-                2- Remover Aluno
-                3- Mostrar Dados
+                2- Remover Alunos com média < 3
+                 3- Mostrar Dados dos Alunos
+                 4- Mostrar Médias
+                 5- Mostrar Média > 6
+                 6- Mostrar Idade > 30
                 0- Sair
                 
                 """;
@@ -67,28 +73,47 @@ public class Exercicio {
                 alunoMap.remove(rm);
             }
             if (opcao == 3) {
-                //Recuperar todos os alunos (valores no mapa)
-                Collection<Aluno> alunos = alunoMap.values();
-
-                for (Aluno a : alunos ) {
+                for (Aluno a : alunos) {
                     System.out.println(a);
                 }
                 //Exibir total de alunos
-                System.out.println("TOTAL: " + alunos.size());
+                System.out.println("\nTOTAL: " + alunos.size());
+            }
+            if (opcao == 4) {
 
+                //Exibir nomes e médias de todos os alunos
                 int somaIdades = 0;
+                double somaNotas = 0;
+                int maiorIdade = 0;
+                int menorIdade = 0;
                 for (Aluno a : alunos) {
-                    somaIdades += a.getIdade();
-                }
-                //Exibir a média das idades
-                System.out.println("Média das idades: " + somaIdades/alunos.size());
+                    System.out.println("Aluno(a): " + a.getNome() + " Média: " + (a.getNota1()+a.getNota2())/2);
 
-                double mediaNotas = 0;
-                for (Aluno a : alunos) {
-                    mediaNotas += a.getNota1() + a.getNota2();
+                    somaIdades += a.getIdade();
+                    somaNotas += a.getNota1() + a.getNota2();
+                    if (a.getIdade() > maiorIdade)
+                        maiorIdade = a.getIdade();
+                    if (a.getIdade() < menorIdade || menorIdade == 0)
+                        menorIdade = a.getIdade();
                 }
+
+                //Exibir a média das idades
+                System.out.println("\nMédia das idades: " + somaIdades / alunos.size());
+
                 //Exibir a média das notas
-                System.out.println("Média das notas: " + mediaNotas/alunos.size()/2);
+                System.out.println("Média das notas: " + somaNotas / alunos.size() / 2);
+
+                //Exibir o aluno com a maior e menor idade
+                System.out.println("\nMaior idade: " + maiorIdade);
+                System.out.println("Menor idade: " + menorIdade);
+
+            }
+            if (opcao == 5) {
+                for (Aluno a : alunos) {
+                    if ((a.getNota1() + a.getNota2()) / 2 >= 6) {
+                        System.out.println(a);
+                    }
+                }
             }
         }
     }

@@ -20,7 +20,7 @@ public class Aluno {
 
     @Override
     public String toString() {
-        return "RM: " + rm + "\nNOME: " + nome + "\nIDADE: " + idade + "\nNOTA 1: " + nota1 + "\nNOTA 2:" + nota2;
+        return "RM:     " + rm + "\nNOME:   " + nome + "\nIDADE:  " + idade + "\nNOTA 1: " + nota1 + "\nNOTA 2: " + nota2;
     }
 
     public int getRm() {
