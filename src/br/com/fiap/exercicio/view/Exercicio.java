@@ -21,10 +21,10 @@ public class Exercicio {
                 
                 1- Adicionar Aluno
                 2- Remover Alunos com média < 3
-                 3- Mostrar Dados dos Alunos
-                 4- Mostrar Médias
-                 5- Mostrar Média > 6
-                 6- Mostrar Idade > 30
+                └  3- Mostrar Dados dos Alunos
+                   4- Mostrar Médias
+                   5- Mostrar Média > 6
+                   6- Mostrar Idade > 30
                 0- Sair
                 
                 """;
@@ -111,6 +111,13 @@ public class Exercicio {
             if (opcao == 5) {
                 for (Aluno a : alunos) {
                     if ((a.getNota1() + a.getNota2()) / 2 >= 6) {
+                        System.out.println(a);
+                    }
+                }
+            }
+            if (opcao == 6) {
+                for (Aluno a : alunos) {
+                    if (a.getIdade() > 30) {
                         System.out.println(a);
                     }
                 }
