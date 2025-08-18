@@ -66,11 +66,11 @@ public class Exercicio {
                 } while (!scanner.nextLine().equalsIgnoreCase("n"));
             }
             if (opcao == 2) {
-                System.out.println("Digite o RM do aluno a ser removido: ");
-                int rm = scanner.nextInt();
-                scanner.nextLine();
-
-                alunoMap.remove(rm);
+                for (Aluno a : alunos) {
+                    if ((a.getNota1()+ a.getNota2())/2 < 3) {
+                        alunos.remove(a);
+                    }
+                }
             }
             if (opcao == 3) {
                 for (Aluno a : alunos) {
