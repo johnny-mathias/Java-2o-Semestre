@@ -1,34 +1,31 @@
 package br.com.fiap.exemplo;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Exemplo01 {
 
     public static void main(String[] args) {
-        //Lista de Nomes de Frutas
-        List<String> frutas = new ArrayList<>();
-        frutas.add("Manga");
-        frutas.add("Uva");
-        frutas.add("Abacaxi");
+        //Ler dois numeros
+        Scanner sc = new Scanner(System.in);
 
-        //Exibir a quantidade de frutas na lista
-        System.out.println("Quantidade: " + frutas.size());
+        try {
+            System.out.println("Numero 1: ");
+            int n1 = sc.nextInt();
 
-        //Exibir o valor da primeira posição da lista
-        System.out.println("Valor da primeira posição: " + frutas.get(0));
+            System.out.println("Numero 2: ");
+            int n2 = sc.nextInt();
 
-        //Adicionar uma fruta na segunda opção
-        frutas.add(2,"Morango");
+            int divisao = n1/n2;
+            System.out.println(n1 + "/" + n2 + " = " + divisao);
 
-        //Remover a uva da lista
-        frutas.remove(1);
-
-
-        //Exibir todos os elementos da lista (Posição - Valor )
-        for (int i = 0; i < frutas.size(); i++) {
-            System.out.println("Posição: " + i + " " + frutas.get(i));
-
+        } catch (InputMismatchException e) {
+            //Tratamento da Exception
+            System.err.println("Digite um valor válido na próxima vez!");
+        } catch (ArithmeticException e) {
+            System.err.println("Não é possível dividir por zero!");
+        } finally {
+            sc.close();
         }
 
 
