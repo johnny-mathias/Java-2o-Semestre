@@ -14,11 +14,7 @@ public class Exemplo02 {
         Scanner sc = new Scanner(System.in);
 
         //Criar menu
-        String menu = ```Escolha:
-        1-Depositar
-        2-Retirar
-        3-Exibir Saldo
-        0-Sair```
+        String menu = "Escolha:\n1-Depositar\n2-Retirar\n3-Exibir Saldo\n0-Sair";
 
         int opcao;
         do {
