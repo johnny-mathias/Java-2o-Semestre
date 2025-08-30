@@ -2,41 +2,51 @@ package br.com.fiap.exemplo;
 
 import br.com.fiap.model.ContaCorrente;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Exemplo02 {
-    public static void main(String[] args) {
 
-        //Instanciar conta corrente
+    public static void main(String[] args) {
+        //Instanciar a classe ContaCorrente
         ContaCorrente cc = new ContaCorrente();
 
-        //Instanciar o Scanner
-        Scanner sc = new Scanner(System.in);
-
-        //Criar menu
-        String menu = "Escolha:\n1-Depositar\n2-Retirar\n3-Exibir Saldo\n0-Sair";
-
-        int opcao;
+        Scanner leitor = new Scanner(System.in);
+        int opcao = -1;
         do {
-            System.out.println(menu);
-            opcao = sc.nextInt();
+            try {
+                System.out.println("Escolha: \n1-Depositar \n2-Retirar \n3-Exibir Saldo \n0-Sair");
+                opcao = leitor.nextInt();
+                switch (opcao) {
+                    case 1:
+                        //Depositar um valor na conta (usuário insere o valor)
+                        System.out.println("Digite o valor para depositar");
+                        double valor = leitor.nextDouble();
+                        cc.depositar(valor);
+                        break;
+                    case 2:
+                        //Retirar um valor da conta (usuário insere o valor)
+                        System.out.println("Digite o valor para retirada");
+                        valor = leitor.nextDouble();
+                        cc.retirar(valor);
+                    case 3:
+                        //Exibir o saldo
+                        System.out.println("Saldo atual: " + cc.getSaldo());
+                    default:
+                        //Caso seja outro numero
+                        System.out.println("Opção inválida!");
+                }
+                //Exibir o saldo
+                System.out.println("Saldo atual: " + cc.getSaldo());
 
-            //Depositar um valor na conta (usuário insere o valor)
-            System.out.println("Digite o valor para depositar");
-            double valor = sc.nextDouble();
-            cc.depositar(valor);
+            } catch (InputMismatchException e) {
+                leitor.next();
+                System.err.println("Digite um valor válido na próxima vez!");
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+        }while(opcao != 0);
 
-            //Exibir o saldo
-            System.out.println("Saldo atual: " + cc.getSaldo());
-
-            //Retirar um valor da conta (usuário insere o valor)
-            System.out.println("Digite o valor para retirada");
-            valor = sc.nextDouble();
-            cc.retirar(valor);
-
-            //Exibir o saldo
-            System.out.println("Saldo atual: " + cc.getSaldo());
-        } while(opcao != 0);
 
     }//main
 }//class
