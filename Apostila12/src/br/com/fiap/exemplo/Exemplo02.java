@@ -1,5 +1,7 @@
 package br.com.fiap.exemplo;
 
+import br.com.fiap.exception.SaldoInsuficienteException;
+import br.com.fiap.exception.ValorMenorQueZeroException;
 import br.com.fiap.model.ContaCorrente;
 
 import java.util.InputMismatchException;
@@ -29,21 +31,29 @@ public class Exemplo02 {
                         System.out.println("Digite o valor para retirada");
                         valor = leitor.nextDouble();
                         cc.retirar(valor);
+                        break;
                     case 3:
                         //Exibir o saldo
                         System.out.println("Saldo atual: " + cc.getSaldo());
+                        break;
                     default:
                         //Caso seja outro numero
                         System.out.println("Opção inválida!");
+                        break;
                 }
                 //Exibir o saldo
-                System.out.println("Saldo atual: " + cc.getSaldo());
+                //System.out.println("Saldo atual: " + cc.getSaldo());
 
             } catch (InputMismatchException e) {
                 leitor.next();
                 System.err.println("Digite um valor válido na próxima vez!");
-            } catch (Exception e) {
+            } catch (SaldoInsuficienteException e) {
                 System.err.println(e.getMessage());
+            }
+            catch (ValorMenorQueZeroException e) {
+                System.err.println(e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Erro genérico... procure o admin");
             }
         }while(opcao != 0);
 
