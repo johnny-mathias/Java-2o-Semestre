@@ -47,10 +47,7 @@ public class Exemplo02 {
             } catch (InputMismatchException e) {
                 leitor.next();
                 System.err.println("Digite um valor válido na próxima vez!");
-            } catch (SaldoInsuficienteException e) {
-                System.err.println(e.getMessage());
-            }
-            catch (ValorMenorQueZeroException e) {
+            } catch (SaldoInsuficienteException | ValorMenorQueZeroException e){
                 System.err.println(e.getMessage());
             } catch (Exception e) {
                 System.err.println("Erro genérico... procure o admin");
