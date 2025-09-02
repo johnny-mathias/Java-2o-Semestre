@@ -6,7 +6,7 @@ public class SaldoInsuficienteException extends Exception {
     super(mensagem);
     }
 
-  public ValorMenorQueZeroException() {
+  public ValorMenorQueZeroException(String mensagem) {
     super("Valor sei la o que");
   }
 }
