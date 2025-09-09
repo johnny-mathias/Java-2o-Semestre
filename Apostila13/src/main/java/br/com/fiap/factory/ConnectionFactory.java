@@ -4,16 +4,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+//Fabrica de Conexões com o DB
 public class ConnectionFactory {
+
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
-
-        //Obter conexão com o banco de dados
+        //Registrar o driver do banco de dados
         Class.forName("oracle.jdbc.driver.OracleDriver");
-        Connection conexao = DriverManager.getConnection("jdbc:oracle:thin:@oracle.fiap.com.br:1521:orcl", "rm566516", "210806");
 
-        System.out.println("Conectado com sucesso!");
+        //Obter a conexão com o banco de dados
+        Connection conexao = DriverManager.getConnection("jdbc:oracle:thin:@oracle.fiap.com.br:1521:orcl",
+                "rm566516","210806");
 
         return conexao;
-
     }
+
 }
