@@ -1,9 +1,19 @@
 package br.com.fiap.ecommerce.dto.produto;
 
 public class DetalhesProdutoDto {
+
+    private int codigo;
     private String nome;
     private int quantidade;
     private double valor;
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
 
     public String getNome() {
         return nome;

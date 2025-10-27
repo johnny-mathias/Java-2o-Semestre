@@ -17,16 +17,14 @@ public class ProdutoDao {
     private DataSource dataSource;
 
     public void deletar(int id) throws SQLException, EntidadeNaoEncontradaException {
-        try(Connection conexao = dataSource.getConnection()){
-            PreparedStatement stmt = conexao.prepareStatement("delete from t_tdspv_produto where cd_produto = ?");
-            stmt.setInt(1,id);
-            if (stmt.executeUpdate() == 0 )
-                throw new EntidadeNaoEncontradaException("Não tem produto pra apagar");
+        try (Connection conexao = dataSource.getConnection()){
+            PreparedStatement stmt = conexao.prepareStatement("delete from " +
+                    "t_tdspv_produto where cd_produto = ?");
+            stmt.setInt(1, id);
+            if (stmt.executeUpdate() == 0)
+                throw new EntidadeNaoEncontradaException("Não tem produto para apagar");
         }
-
     }
-
-
 
     public void atualizar(Produto produto) throws SQLException, EntidadeNaoEncontradaException {
         try (Connection conexao = dataSource.getConnection()){
@@ -34,7 +32,6 @@ public class ProdutoDao {
                     "qt_produto = ?, vl_produto = ?, dt_validade =? where cd_produto = ?");
             //Seta os parametros
             setarParametros(produto, stmt);
-            stmt.setInt(5 , produto.getCodigo());
             //Executa a query e valida se deu bom
             if (stmt.executeUpdate() == 0)
                 throw new EntidadeNaoEncontradaException("Produto não existe para ser atualizado");
@@ -100,8 +97,6 @@ public class ProdutoDao {
             if (resultSet.next()){
                 produto.setCodigo(resultSet.getInt(1));
             }
-
         }
     }
-
 }

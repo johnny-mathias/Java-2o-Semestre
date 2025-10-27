@@ -1,8 +1,8 @@
 package br.com.fiap.ecommerce.resource;
 
-import br.com.fiap.bean.ModelMapperProducer;
 import br.com.fiap.ecommerce.dao.ProdutoDao;
-import br.com.fiap.ecommerce.dto.produto.CadastrarProdutoDto;
+import br.com.fiap.ecommerce.dto.produto.AtualizarProdutoDto;
+import br.com.fiap.ecommerce.dto.produto.CadastroProdutoDto;
 import br.com.fiap.ecommerce.dto.produto.DetalhesProdutoDto;
 import br.com.fiap.ecommerce.exception.EntidadeNaoEncontradaException;
 import br.com.fiap.ecommerce.model.Produto;
@@ -28,17 +28,18 @@ public class ProdutoResource {
 
     @DELETE
     @Path("/{id}")
-    public Response deletar (int codigo) throws SQLException, EntidadeNaoEncontradaException {
+    public Response deletar(@PathParam("id") int codigo) throws EntidadeNaoEncontradaException, SQLException {
         produtoDao.deletar(codigo);
-        return Response.noContent().build();
+        return Response.noContent().build(); // 204 No content
     }
 
     @PUT
     @Path("/{id}")
-    public Response atualizar(@PathParam("id") int codigo, Produto produto) throws EntidadeNaoEncontradaException, SQLException {
+    public Response atualizar(@PathParam("id") int codigo, AtualizarProdutoDto dto) throws EntidadeNaoEncontradaException, SQLException {
+        Produto produto = modelMapper.map(dto, Produto.class);
         produto.setCodigo(codigo);
         produtoDao.atualizar(produto);
-        return Response.noContent().build();
+        return Response.ok().build();
     }
 
     @GET
@@ -46,24 +47,29 @@ public class ProdutoResource {
     public Response buscar(@PathParam("id") int codigo) throws SQLException, EntidadeNaoEncontradaException {
         DetalhesProdutoDto dto = modelMapper
                 .map(produtoDao.buscar(codigo), DetalhesProdutoDto.class);
-        return Response.ok(produtoDao.buscar(codigo)).build();
+        return Response.ok(dto).build();
     }
 
     @GET
-    public List<Produto> listar() throws SQLException {
-        return produtoDao.listar();
+    public List<DetalhesProdutoDto> listar() throws SQLException {
+        return produtoDao.listar().stream().map(
+                p -> modelMapper.map(p, DetalhesProdutoDto.class)
+        ).toList();
     }
 
     @POST
-    public Response create(CadastrarProdutoDto dto, @Context UriInfo uriInfo) throws SQLException {
+    public Response create(CadastroProdutoDto dto, @Context UriInfo uriInfo) throws SQLException {
         Produto produto = modelMapper.map(dto, Produto.class);
+
         produtoDao.cadastrar(produto);
 
         //Constroi uma URL de retorno, para acessar o recurso criado
         URI uri = uriInfo.getAbsolutePathBuilder()
                 .path(String.valueOf(produto.getCodigo())).build();
 
-        return Response.created(uri).entity(modelMapper.map(produto, DetalhesProdutoDto.class)).build(); //HTTP STATUS CODE 201 (Created)
+        return Response.created(uri)
+                .entity(modelMapper.map(produto, DetalhesProdutoDto.class))
+                .build(); //HTTP STATUS CODE 201 (Created)
     }
 
 }

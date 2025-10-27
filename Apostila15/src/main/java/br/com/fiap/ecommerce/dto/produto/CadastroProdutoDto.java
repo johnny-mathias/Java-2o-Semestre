@@ -1,31 +1,20 @@
-package br.com.fiap.ecommerce.model;
+package br.com.fiap.ecommerce.dto.produto;
+
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
-public class Produto {
-    //Criar a classe produto
+public class CadastroProdutoDto {
 
-    private int codigo;
+    @NotBlank(message = "Nome é obrigatório!")
+    @Size(max = 80)
     private String nome;
+    @Positive
     private int quantidade;
+    @Positive
     private double valor;
+    @Future(message = "Data deve estar no futuro!")
     private LocalDate dataValidade;
-
-    public Produto(int codigo, String nome, int quantidade, double valor, LocalDate dataValidade) {
-        this.codigo = codigo;
-        this.nome = nome;
-        this.quantidade = quantidade;
-        this.valor = valor;
-        this.dataValidade = dataValidade;
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
 
     public String getNome() {
         return nome;

@@ -1,12 +1,19 @@
 package br.com.fiap.ecommerce.dto.produto;
 
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 
-public class CadastrarProdutoDto {
+public class AtualizarProdutoDto {
 
+    @NotBlank(message = "Nome é obrigatório!")
+    @Size(max = 80)
     private String nome;
+    @PositiveOrZero
     private int quantidade;
+    @Positive
     private double valor;
+    @Future(message = "Data deve estar no futuro!")
     private LocalDate dataValidade;
 
     public String getNome() {
