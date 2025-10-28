@@ -1,10 +1,13 @@
 package br.com.fiap.ecommerce.resource;
 
+import br.com.fiap.ecommerce.dao.CategoriaDao;
 import br.com.fiap.ecommerce.dao.ProdutoDao;
+import br.com.fiap.ecommerce.dto.categoria.DetalhesCategoriaDto;
 import br.com.fiap.ecommerce.dto.produto.AtualizarProdutoDto;
 import br.com.fiap.ecommerce.dto.produto.CadastroProdutoDto;
 import br.com.fiap.ecommerce.dto.produto.DetalhesProdutoDto;
 import br.com.fiap.ecommerce.exception.EntidadeNaoEncontradaException;
+import br.com.fiap.ecommerce.model.Categoria;
 import br.com.fiap.ecommerce.model.Produto;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -26,6 +29,9 @@ public class ProdutoResource {
     @Inject
     private ModelMapper modelMapper;
 
+    @Inject
+    private CategoriaDao categoriaDao;
+
     @DELETE
     @Path("/{id}")
     public Response deletar(@PathParam("id") int codigo) throws EntidadeNaoEncontradaException, SQLException {
@@ -44,7 +50,7 @@ public class ProdutoResource {
 
     @GET
     @Path("/{id}")
-    public Response buscar(@PathParam("id") int codigo) throws SQLException, EntidadeNaoEncontradaException {
+    public Response buscar(@PathParam("id") int codigo, int categoria) throws SQLException, EntidadeNaoEncontradaException {
         DetalhesProdutoDto dto = modelMapper
                 .map(produtoDao.buscar(codigo), DetalhesProdutoDto.class);
         return Response.ok(dto).build();
@@ -58,8 +64,11 @@ public class ProdutoResource {
     }
 
     @POST
-    public Response create(CadastroProdutoDto dto, @Context UriInfo uriInfo) throws SQLException {
+    public Response create(CadastroProdutoDto dto, @Context UriInfo uriInfo) throws SQLException, EntidadeNaoEncontradaException {
         Produto produto = modelMapper.map(dto, Produto.class);
+
+        Categoria c = categoriaDao.buscar(dto.getCategoria());
+        produto.setCategoria(c);
 
         produtoDao.cadastrar(produto);
 

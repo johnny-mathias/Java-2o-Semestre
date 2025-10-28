@@ -1,6 +1,7 @@
 package br.com.fiap.ecommerce.dao;
 
 import br.com.fiap.ecommerce.exception.EntidadeNaoEncontradaException;
+import br.com.fiap.ecommerce.model.Categoria;
 import br.com.fiap.ecommerce.model.Produto;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -43,6 +44,7 @@ public class ProdutoDao {
         stmt.setInt(2, produto.getQuantidade());
         stmt.setDouble(3, produto.getValor());
         stmt.setObject(4, produto.getDataValidade());
+        stmt.setInt(5, produto.getCategoria().getCodigo());
     }
 
     public Produto buscar(int codigo) throws SQLException, EntidadeNaoEncontradaException {
@@ -87,7 +89,7 @@ public class ProdutoDao {
         try (Connection conexao = dataSource.getConnection()) {
 
             PreparedStatement stmt = conexao.prepareStatement("insert into t_tdspv_produto (cd_produto, nm_produto, " +
-                    "qt_produto, vl_produto, dt_validade) values (sq_tdspv_produto.nextval, ?, ?, ?, ? )", new String[] {"cd_produto"});
+                    "qt_produto, vl_produto, dt_validade, cd_categoria) values (sq_tdspv_produto.nextval, ?, ?, ?, ?, ?)", new String[] {"cd_produto"});
 
             setarParametros(produto, stmt);
 

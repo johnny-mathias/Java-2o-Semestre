@@ -6,10 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +15,19 @@ public class CategoriaDao {
 
     @Inject
     private DataSource dataSource;
+
+    //Implementar a pesquisa pelo código
+    public Categoria buscar(int id) throws SQLException, EntidadeNaoEncontradaException {
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement stmt = connection.prepareStatement(
+                    "SELECT * FROM t_tdspv_categoria where cd_categoria = ?");
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (!rs.next())
+                throw new EntidadeNaoEncontradaException("Categoria não existe");
+            return parseCategoria(rs);
+        }
+    }
 
     //Função multiuso
     private static void setarParametros(Categoria categoria, PreparedStatement stmt) throws SQLException {
@@ -51,22 +61,6 @@ public class CategoriaDao {
         }
     }
 
-    //READ
-    public Categoria buscar(int codigo) throws SQLException, EntidadeNaoEncontradaException {
-        try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("select * from t_tdspv_categoria where cd_categoria = ?");
-            //Seta o id na query
-            stmt.setInt(1, codigo);
-            //Executa a query
-            ResultSet rs = stmt.executeQuery();
-            //Validar se encontrou o categoria
-            //se não encontrou lança exception
-            if (!rs.next())
-                throw new EntidadeNaoEncontradaException("Categoria não encontrado");
-            //se encontrou recupera os valores e retorna
-            return parseCategoria(rs);
-        }
-    }
 
     public List<Categoria> listar() throws SQLException {
         try (Connection connection = dataSource.getConnection()){

@@ -1,5 +1,6 @@
 package br.com.fiap.ecommerce.dto.produto;
 
+import br.com.fiap.ecommerce.model.Categoria;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
@@ -15,6 +16,8 @@ public class CadastroProdutoDto {
     private double valor;
     @Future(message = "Data deve estar no futuro!")
     private LocalDate dataValidade;
+    @Positive
+    private int categoria;
 
     public String getNome() {
         return nome;
@@ -46,5 +49,13 @@ public class CadastroProdutoDto {
 
     public void setDataValidade(LocalDate dataValidade) {
         this.dataValidade = dataValidade;
+    }
+
+    public int getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(int categoria) {
+        this.categoria = categoria;
     }
 }

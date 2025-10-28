@@ -13,3 +13,11 @@ create table t_tdspv_categoria (
     nm_categoria varchar2(20) not null,
 );
 
+create sequence sq_tdspv_categoria start with 1 increment by 1 nocache;
+
+ALTER TABLE t_tdspv_produto
+ADD (cd_categoria number(6,0));
+
+ALTER TABLE t_tdspv_produto
+ADD CONSTRAINT fk_cd_categoria
+FOREIGN KEY (cd_categoria) REFERENCES t_tdspv_categoria(cd_categoria);

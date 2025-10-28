@@ -1,11 +1,14 @@
 package br.com.fiap.ecommerce.dto.produto;
 
+import br.com.fiap.ecommerce.model.Categoria;
+
 public class DetalhesProdutoDto {
 
     private int codigo;
     private String nome;
     private int quantidade;
     private double valor;
+    private Categoria categoria;
 
     public int getCodigo() {
         return codigo;
@@ -37,5 +40,13 @@ public class DetalhesProdutoDto {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
